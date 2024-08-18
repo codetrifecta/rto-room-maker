@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useAppStore } from './store';
 import { Room } from './Room';
-import { DEFAULT_ROOM_LENGTH, DEFAULT_TILE_SIZE } from './constants';
+import { DEFAULT_ROOM_LENGTH, DEFAULT_TILE_SIZE, TILE_TYPE } from './constants';
 
 function App() {
   const [roomLengthStr, setRoomLengthStr] = useState<string>(
@@ -14,17 +14,22 @@ function App() {
 
   const [roomMatrixStr, setRoomMatrixStr] = useState<string>('');
 
-  const { roomLength, setRoomLength, setTileSize, setRoomMatrix } =
-    useAppStore();
+  const {
+    roomLength,
+    displayGrid,
+    setDisplayGrid,
+    setRoomLength,
+    setTileSize,
+    setRoomMatrix,
+  } = useAppStore();
 
-  // When room length input changes, generate default room matrix
-  useEffect(() => {
+  const generateDefaultRoomMatrix = (roomLength: number) => {
     let roomMatrixString = '[\n';
     for (let row = 0; row < roomLength; row++) {
       roomMatrixString += '[';
       for (let col = 0; col < roomLength; col++) {
         // Create empty room matrix
-        roomMatrixString += '0';
+        roomMatrixString += TILE_TYPE.FLOOR;
 
         if (col !== roomLength - 1) {
           roomMatrixString += ', ';
@@ -40,6 +45,13 @@ function App() {
 
     setRoomMatrixStr(roomMatrixString);
     setRoomMatrix(JSON.parse(roomMatrixString));
+
+    return roomMatrixString;
+  };
+
+  // When room length input changes, generate default room matrix
+  useEffect(() => {
+    generateDefaultRoomMatrix(roomLength);
   }, [roomLength]);
 
   const handleRoomLengthChange = (val: string) => {
@@ -90,6 +102,11 @@ function App() {
 
     setTileSize(valInt);
     setTileSizeStr(valInt.toString());
+  };
+
+  const handleGenerateRoomMatrix = (roomMatrixStr: string) => {
+    const roomMatrix = JSON.parse(roomMatrixStr);
+    setRoomMatrix(roomMatrix);
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -155,19 +172,44 @@ function App() {
             onChange={handleFileChange}
           />
         </div>
+
+        <div className="flex items-center">
+          <label className="mr-3">Display Grid: </label>
+          <input
+            type="checkbox"
+            checked={displayGrid}
+            onChange={() => setDisplayGrid(!displayGrid)}
+          />
+        </div>
       </div>
 
-      <div className="mb-5 relative w-[50%]">
+      <div className="mb-5 relative w-[50%] flex flex-col items-center">
         <div className="mb-3">
-          <label htmlFor="roomMatrix">Room Matrix:</label>
+          <label htmlFor="roomMatrix" className="text-xl">
+            Room Matrix:
+          </label>
         </div>
         <textarea
           id="roomMatrix"
           value={roomMatrixStr}
           onChange={(e) => setRoomMatrixStr(e.target.value)}
-          className="p-2 bg-zinc-700 text-white border border-white rounded"
+          className="p-2 bg-zinc-700 text-white border border-white rounded mb-3"
           style={{ width: '100%', height: 350 }}
         />
+        <div className="flex">
+          <button
+            onClick={() => generateDefaultRoomMatrix(roomLength)}
+            className="hover:border-white"
+          >
+            Reset Matrix
+          </button>
+          <button
+            onClick={() => handleGenerateRoomMatrix(roomMatrixStr)}
+            className="hover:border-white"
+          >
+            Generate Matrix
+          </button>
+        </div>
       </div>
 
       <Room />
