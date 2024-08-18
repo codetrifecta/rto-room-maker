@@ -99,6 +99,15 @@ button {
   transition: border-color 0.25s;
 }
 
+button:hover {
+  border-color: white;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 #root {
   margin: 0 auto;
   text-align: center;

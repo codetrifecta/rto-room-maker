@@ -13,6 +13,9 @@ interface AppStore {
 
   roomMatrix: number[][];
   setRoomMatrix: (roomMatrix: number[][]) => void;
+
+  selectedTiles: [number, number][];
+  setSelectedTiles: (selectedTiles: [number, number][]) => void;
 }
 
 const DEFAULT_ROOM_MATRIX = Array.from({ length: DEFAULT_ROOM_LENGTH }, () =>
@@ -38,5 +41,10 @@ export const useAppStore = create<AppStore>((set) => ({
   roomMatrix: DEFAULT_ROOM_MATRIX,
   setRoomMatrix: (roomMatrix: number[][]) => {
     set({ roomMatrix });
+  },
+
+  selectedTiles: [],
+  setSelectedTiles: (selectedTiles: [number, number][]) => {
+    set({ selectedTiles });
   },
 }));
