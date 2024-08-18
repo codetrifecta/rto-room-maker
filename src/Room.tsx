@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { useAppStore } from './store';
 import clsx from 'clsx';
+import { TILE_TYPE } from './constants';
 
 export const Room: FC = () => {
-  const { roomLength, tileSize, displayGrid } = useAppStore();
+  const { roomLength, tileSize, displayGrid, roomMatrix } = useAppStore();
 
   return (
     <div
@@ -13,22 +14,31 @@ export const Room: FC = () => {
         gridTemplateRows: `repeat(${roomLength}, ${tileSize}px)`,
       }}
     >
-      {Array.from({ length: roomLength * roomLength }, (_, i) => (
-        <Tile key={i} size={tileSize} displayOutline={displayGrid} />
-      ))}
+      {roomMatrix.map((row, rowIndex) =>
+        row.map((tileType, colIndex) => (
+          <Tile
+            key={`${rowIndex}-${colIndex}`}
+            tileType={tileType}
+            size={tileSize}
+            displayOutline={displayGrid}
+          />
+        ))
+      )}
     </div>
   );
 };
 
-const Tile: FC<{ size: number; displayOutline: boolean }> = ({
-  size,
-  displayOutline,
-}) => {
+const Tile: FC<{
+  size: number;
+  displayOutline: boolean;
+  tileType: TILE_TYPE;
+}> = ({ size, displayOutline, tileType = TILE_TYPE.FLOOR }) => {
   return (
     <div className="relative" style={{ width: size, height: size, padding: 1 }}>
       <div
         className={clsx('w-full h-full', {
-          'border border-white': displayOutline,
+          border: displayOutline,
+          'border-white': tileType === TILE_TYPE.FLOOR,
         })}
       ></div>
     </div>

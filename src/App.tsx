@@ -1,16 +1,50 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useAppStore } from './store';
 import { Room } from './Room';
+import { DEFAULT_ROOM_LENGTH, DEFAULT_TILE_SIZE } from './constants';
 
 function App() {
-  const [roomLengthStr, setRoomLengthStr] = useState<string>('15');
-  const [tileSizeStr, setTileSizeStr] = useState<string>('32');
+  const [roomLengthStr, setRoomLengthStr] = useState<string>(
+    DEFAULT_ROOM_LENGTH.toString()
+  );
+  const [tileSizeStr, setTileSizeStr] = useState<string>(
+    DEFAULT_TILE_SIZE.toString()
+  );
   const [file, setFile] = useState<string>();
 
-  const { setRoomLength, setTileSize } = useAppStore();
+  const [roomMatrixStr, setRoomMatrixStr] = useState<string>('');
+
+  const { roomLength, setRoomLength, setTileSize, setRoomMatrix } =
+    useAppStore();
+
+  // When room length input changes, generate default room matrix
+  useEffect(() => {
+    let roomMatrixString = '[\n';
+    for (let row = 0; row < roomLength; row++) {
+      roomMatrixString += '[';
+      for (let col = 0; col < roomLength; col++) {
+        // Create empty room matrix
+        roomMatrixString += '0';
+
+        if (col !== roomLength - 1) {
+          roomMatrixString += ', ';
+        }
+      }
+      roomMatrixString += ']';
+      if (row !== roomLength - 1) {
+        roomMatrixString += ',\n';
+      }
+    }
+
+    roomMatrixString += '\n]';
+
+    setRoomMatrixStr(roomMatrixString);
+    setRoomMatrix(JSON.parse(roomMatrixString));
+  }, [roomLength]);
 
   const handleRoomLengthChange = (val: string) => {
     if (val === '') {
+      setRoomLength(1);
       setRoomLengthStr('0');
       return;
     }
@@ -22,12 +56,20 @@ function App() {
       return;
     }
 
+    if (valInt > 29) {
+      setRoomLength(29);
+      setRoomLengthStr('29');
+      console.error('Room length is too large');
+      return;
+    }
+
     setRoomLength(valInt);
     setRoomLengthStr(valInt.toString());
   };
 
   const handleTileSizeChange = (val: string) => {
     if (val === '') {
+      setTileSize(16);
       setTileSizeStr('0');
       return;
     }
@@ -36,6 +78,13 @@ function App() {
 
     if (Number.isNaN(valInt)) {
       console.error('Not a valid room length input');
+      return;
+    }
+
+    if (valInt > 64) {
+      setTileSize(64);
+      setTileSizeStr('64');
+      console.error('Room length is too large');
       return;
     }
 
@@ -55,8 +104,15 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <h1 className="my-10">RtO Room Maker</h1>
+    <div className="flex flex-col items-center pb-20">
+      <div className="my-10">
+        <h1 className="mb-2 uppercase">
+          R<span className="text-4xl">eturn</span>{' '}
+          <span className="text-4xl">to</span> O
+          <span className="text-4xl">lympus</span>
+        </h1>
+        <h2>Room Maker</h2>
+      </div>
       <div className="flex gap-10 mb-5">
         <div className="flex items-center">
           <label className="mr-3">Room Length: </label>
@@ -99,6 +155,19 @@ function App() {
             onChange={handleFileChange}
           />
         </div>
+      </div>
+
+      <div className="mb-5 relative w-[50%]">
+        <div className="mb-3">
+          <label htmlFor="roomMatrix">Room Matrix:</label>
+        </div>
+        <textarea
+          id="roomMatrix"
+          value={roomMatrixStr}
+          onChange={(e) => setRoomMatrixStr(e.target.value)}
+          className="p-2 bg-zinc-700 text-white border border-white rounded"
+          style={{ width: '100%', height: 350 }}
+        />
       </div>
 
       <Room />
