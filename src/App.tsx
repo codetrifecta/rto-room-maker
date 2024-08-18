@@ -15,6 +15,7 @@ function App() {
   const [roomMatrixStr, setRoomMatrixStr] = useState<string>('');
 
   const {
+    roomMatrix,
     roomLength,
     displayGrid,
     setDisplayGrid,
@@ -51,10 +52,50 @@ function App() {
     return roomMatrixString;
   };
 
-  // When room length input changes, generate default room matrix
+  // When room length input changes,
+  // generate default room matrix
   useEffect(() => {
     generateDefaultRoomMatrix(roomLength);
   }, [roomLength]);
+
+  // When room matrix changes,
+  // update room matrix string
+  useEffect(() => {
+    let roomMatrixString = '[\n';
+    for (let row = 0; row < roomLength; row++) {
+      roomMatrixString += '[';
+      for (let col = 0; col < roomLength; col++) {
+        // Create empty room matrix
+
+        switch (roomMatrix[row][col]) {
+          case TILE_TYPE.NULL:
+            roomMatrixString += TILE_TYPE.NULL;
+            break;
+          case TILE_TYPE.WALL:
+            roomMatrixString += TILE_TYPE.WALL;
+            break;
+          case TILE_TYPE.DOOR:
+            roomMatrixString += TILE_TYPE.DOOR;
+            break;
+          default:
+            roomMatrixString += TILE_TYPE.FLOOR;
+            break;
+        }
+
+        if (col !== roomLength - 1) {
+          roomMatrixString += ', ';
+        }
+      }
+      roomMatrixString += ']';
+      if (row !== roomLength - 1) {
+        roomMatrixString += ',\n';
+      }
+    }
+
+    roomMatrixString += '\n]';
+
+    setRoomMatrixStr(roomMatrixString);
+  }, [roomMatrix]);
 
   const handleRoomLengthChange = (val: string) => {
     if (val === '') {
@@ -188,7 +229,7 @@ function App() {
       <div className="mb-5 relative w-[50%] flex flex-col items-center">
         <div className="mb-3">
           <label htmlFor="roomMatrix" className="text-xl">
-            Room Matrix:
+            Room Matrix String:
           </label>
         </div>
         <textarea
