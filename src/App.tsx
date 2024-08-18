@@ -10,8 +10,6 @@ function App() {
   const [tileSizeStr, setTileSizeStr] = useState<string>(
     DEFAULT_TILE_SIZE.toString()
   );
-  const [file, setFile] = useState<string>();
-
   const [roomMatrixStr, setRoomMatrixStr] = useState<string>('');
 
   const {
@@ -22,6 +20,7 @@ function App() {
     setRoomLength,
     setTileSize,
     setRoomMatrix,
+    setFile,
   } = useAppStore();
 
   const appRef = useRef<HTMLDivElement>(null);
@@ -184,7 +183,7 @@ function App() {
         </div>
 
         <div className="flex items-center">
-          <label className="mr-3">Room Length: </label>
+          <label className="mr-3">Tile Size: </label>
           <input
             className="w-[50px]"
             value={tileSizeStr}
@@ -226,7 +225,7 @@ function App() {
         </div>
       </div>
 
-      <div className="mb-5 relative w-[50%] flex flex-col items-center">
+      <div className="mb-8 relative w-[50%] flex flex-col items-center">
         <div className="mb-3">
           <label htmlFor="roomMatrix" className="text-xl">
             Room Matrix String:
@@ -256,8 +255,6 @@ function App() {
       </div>
 
       <Room />
-
-      <img src={file} />
     </div>
   );
 }

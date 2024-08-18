@@ -22,6 +22,9 @@ interface AppStore {
 
   isRightMouseDown: boolean;
   setIsRightMouseDown: (isRightMouseDown: boolean) => void;
+
+  file: string;
+  setFile: (file: string) => void;
 }
 
 const DEFAULT_ROOM_MATRIX = Array.from({ length: DEFAULT_ROOM_LENGTH }, () =>
@@ -62,5 +65,10 @@ export const useAppStore = create<AppStore>((set) => ({
   isRightMouseDown: false,
   setIsRightMouseDown: (isRightMouseDown: boolean) => {
     set({ isRightMouseDown });
+  },
+
+  file: '',
+  setFile: (file: string) => {
+    set({ file });
   },
 }));

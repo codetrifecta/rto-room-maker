@@ -2,9 +2,11 @@ import { FC, useEffect, useRef } from 'react';
 import { useAppStore } from './store';
 import clsx from 'clsx';
 import { TILE_TYPE } from './constants';
+import { RoomArt } from './RoomArt';
 
 export const Room: FC = () => {
   const {
+    file,
     roomLength,
     tileSize,
     displayGrid,
@@ -67,12 +69,6 @@ export const Room: FC = () => {
     };
   }, [roomRef.current]);
 
-  //   If room length changes,
-  // Reset selected tiles
-  useEffect(() => {
-    setSelectedTiles([]);
-  }, [roomLength]);
-
   const onAddSelectedTile = (row: number, col: number) => {
     // Add selected tile to the list if it doesn't exist
     const doesTileExist = selectedTiles.some(
@@ -122,9 +118,9 @@ export const Room: FC = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <h2 className="mb-5">Room Visualizer</h2>
-      <p className="mb-5">Selected tiles: {selectedTiles.length}</p>
-      <div className="flex mb-5">
+      <h2 className="mb-3">Room Visualizer</h2>
+      <p className="mb-3">Selected tiles: {selectedTiles.length}</p>
+      <div className="flex mb-3">
         <button
           disabled={selectedTiles.length === 0}
           onClick={onResetSelection}
@@ -158,29 +154,43 @@ export const Room: FC = () => {
       </div>
 
       <div
-        ref={roomRef}
-        className="grid"
-        style={{
-          gridTemplateColumns: `repeat(${roomLength}, ${tileSize}px)`,
-          gridTemplateRows: `repeat(${roomLength}, ${tileSize}px)`,
-        }}
+        className="relative"
+        style={{ width: roomLength * tileSize, height: roomLength * tileSize }}
       >
-        {roomMatrix.map((row, rowIndex) =>
-          row.map((tileType, colIndex) => (
-            <Tile
-              key={`${rowIndex}-${colIndex}`}
-              tileType={tileType}
-              size={tileSize}
-              selected={selectedTiles.some(
-                ([row, col]) => row === rowIndex && col === colIndex
-              )}
-              onSelect={() => onAddSelectedTile(rowIndex, colIndex)}
-              onUnselect={() => onRemoveSelectedTile(rowIndex, colIndex)}
-              displayOutline={displayGrid}
-              isLeftMouseDown={isLeftMouseDown}
-            />
-          ))
-        )}
+        <div
+          ref={roomRef}
+          className="absolute top-0 left-0 grid z-10"
+          style={{
+            gridTemplateColumns: `repeat(${roomLength}, ${tileSize}px)`,
+            gridTemplateRows: `repeat(${roomLength}, ${tileSize}px)`,
+          }}
+        >
+          {roomMatrix.map((row, rowIndex) =>
+            row.map((tileType, colIndex) => (
+              <Tile
+                key={`${rowIndex}-${colIndex}`}
+                tileType={tileType}
+                size={tileSize}
+                selected={selectedTiles.some(
+                  ([row, col]) => row === rowIndex && col === colIndex
+                )}
+                onSelect={() => onAddSelectedTile(rowIndex, colIndex)}
+                onUnselect={() => onRemoveSelectedTile(rowIndex, colIndex)}
+                displayOutline={displayGrid}
+                isLeftMouseDown={isLeftMouseDown}
+              />
+            ))
+          )}
+        </div>
+
+        <div className="absolute top-0 left-0">
+          <RoomArt
+            width={roomLength * tileSize}
+            height={roomLength * tileSize}
+            imgSrc={file}
+            grayscale={false}
+          />
+        </div>
       </div>
     </div>
   );
@@ -206,22 +216,22 @@ const Tile: FC<{
   return (
     <div
       className="relative"
-      style={{ width: size, height: size, padding: 1 }}
+      style={{ width: size, height: size, padding: 2 }}
       onMouseOver={() => (isLeftMouseDown && !selected ? onSelect() : null)}
       onClick={selected ? onUnselect : onSelect}
     >
       <div
         className={clsx('relative w-full h-full', {
-          border: displayOutline,
+          'border-2': displayOutline,
           'border-none': tileType === TILE_TYPE.NULL,
           'border-white': tileType === TILE_TYPE.FLOOR,
           'border-red-600': tileType === TILE_TYPE.WALL,
-          'border-2 border-yellow-300': tileType === TILE_TYPE.DOOR,
+          'border-yellow-300': tileType === TILE_TYPE.DOOR,
         })}
       >
         <div
           className={clsx('relative w-full h-full', {
-            'bg-white bg-opacity-10': selected,
+            'bg-white bg-opacity-50': selected,
           })}
         ></div>
       </div>
