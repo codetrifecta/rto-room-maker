@@ -118,7 +118,7 @@ export const Room: FC = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <h2 className="mb-3">Room Visualizer</h2>
+      <h2 className="mb-3">Tile - Art Visualizer</h2>
       <p className="mb-3">Selected tiles: {selectedTiles.length}</p>
       <div className="flex mb-3">
         <button
