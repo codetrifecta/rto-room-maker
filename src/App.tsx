@@ -225,7 +225,7 @@ function App() {
         </div>
       </div>
 
-      <div className="mb-8 relative w-[50%] flex flex-col items-center">
+      <div className="mb-8 relative w-[40%] flex flex-col items-center">
         <div className="mb-3">
           <label htmlFor="roomMatrix" className="text-xl">
             Room Matrix String:
