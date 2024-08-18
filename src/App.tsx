@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useAppStore } from './store';
 import { Room } from './Room';
 import { DEFAULT_ROOM_LENGTH, DEFAULT_TILE_SIZE, TILE_TYPE } from './constants';
@@ -22,6 +22,8 @@ function App() {
     setTileSize,
     setRoomMatrix,
   } = useAppStore();
+
+  const appRef = useRef<HTMLDivElement>(null);
 
   const generateDefaultRoomMatrix = (roomLength: number) => {
     let roomMatrixString = '[\n';
@@ -121,7 +123,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col items-center pb-20">
+    <div className="flex flex-col items-center pb-20" ref={appRef}>
       <div className="my-10">
         <h1 className="mb-2 uppercase">
           R<span className="text-4xl">eturn</span>{' '}

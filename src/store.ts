@@ -16,6 +16,12 @@ interface AppStore {
 
   selectedTiles: [number, number][];
   setSelectedTiles: (selectedTiles: [number, number][]) => void;
+
+  isLeftMouseDown: boolean;
+  setIsLeftMouseDown: (isLeftMouseDown: boolean) => void;
+
+  isRightMouseDown: boolean;
+  setIsRightMouseDown: (isRightMouseDown: boolean) => void;
 }
 
 const DEFAULT_ROOM_MATRIX = Array.from({ length: DEFAULT_ROOM_LENGTH }, () =>
@@ -46,5 +52,15 @@ export const useAppStore = create<AppStore>((set) => ({
   selectedTiles: [],
   setSelectedTiles: (selectedTiles: [number, number][]) => {
     set({ selectedTiles });
+  },
+
+  isLeftMouseDown: false,
+  setIsLeftMouseDown: (isLeftMouseDown: boolean) => {
+    set({ isLeftMouseDown });
+  },
+
+  isRightMouseDown: false,
+  setIsRightMouseDown: (isRightMouseDown: boolean) => {
+    set({ isRightMouseDown });
   },
 }));
