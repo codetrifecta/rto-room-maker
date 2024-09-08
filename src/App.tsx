@@ -21,14 +21,22 @@ function App() {
     roomMatrix,
     roomLength,
     displayGrid,
+    fileArtRoomFloorDisabled,
+    fileArtRoomObstacleDisabled,
+    fileArtRoomWallDisabled,
+    fileArtRoomDoorDisabled,
     setDisplayGrid,
     setRoomLength,
     setTileSize,
     setRoomMatrix,
     setFileArtRoomFloor,
+    setArtRoomFloorDisabled,
     setFileArtRoomObstacle,
+    setArtRoomObstacleDisabled,
     setFileArtRoomWall,
+    setArtRoomWallDisabled,
     setFileArtRoomDoor,
+    setArtRoomDoorDisabled,
   } = useAppStore();
 
   const appRef = useRef<HTMLDivElement>(null);
@@ -322,6 +330,46 @@ function App() {
             className="hidden"
             type="file"
             onChange={(e) => handleFileChange(e, FILE_TYPE.DOOR)}
+          />
+        </div>
+      </div>
+
+      <div className="flex gap-5 mb-5">
+        <div className="flex items-center">
+          <label className="mr-3">Display Floor Art: </label>
+          <input
+            type="checkbox"
+            checked={!fileArtRoomFloorDisabled}
+            onChange={() => setArtRoomFloorDisabled(!fileArtRoomFloorDisabled)}
+          />
+        </div>
+
+        <div className="flex items-center">
+          <label className="mr-3">Display Obstacle Art: </label>
+          <input
+            type="checkbox"
+            checked={!fileArtRoomObstacleDisabled}
+            onChange={() =>
+              setArtRoomObstacleDisabled(!fileArtRoomObstacleDisabled)
+            }
+          />
+        </div>
+
+        <div className="flex items-center">
+          <label className="mr-3">Display Wall Art: </label>
+          <input
+            type="checkbox"
+            checked={!fileArtRoomWallDisabled}
+            onChange={() => setArtRoomWallDisabled(!fileArtRoomWallDisabled)}
+          />
+        </div>
+
+        <div className="flex items-center">
+          <label className="mr-3">Display Door Art: </label>
+          <input
+            type="checkbox"
+            checked={!fileArtRoomDoorDisabled}
+            onChange={() => setArtRoomDoorDisabled(!fileArtRoomDoorDisabled)}
           />
         </div>
       </div>

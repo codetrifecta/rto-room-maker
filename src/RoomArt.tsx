@@ -6,14 +6,23 @@ export const RoomArt: FC<{
   height: number;
   imgSrc: string;
   defaultImgSrc?: string;
+  disabled?: boolean;
   grayscale?: boolean;
-}> = ({ width, height, imgSrc, defaultImgSrc, grayscale }) => {
+}> = ({
+  width,
+  height,
+  imgSrc,
+  defaultImgSrc = '',
+  disabled = false,
+  grayscale,
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const { tileSize } = useAppStore();
 
   useEffect(() => {
     const canvas = canvasRef.current;
+
     if (!canvas) {
       return;
     }
@@ -23,6 +32,8 @@ export const RoomArt: FC<{
       return;
     }
 
+    context.reset();
+
     const image = new Image();
 
     if (!imgSrc) {
@@ -31,11 +42,15 @@ export const RoomArt: FC<{
       }
     }
 
+    if (disabled) {
+      imgSrc = '';
+    }
+
     image.src = imgSrc;
 
     image.onload = function () {
       if (!context) return;
-      context.reset();
+
       context.imageSmoothingEnabled = false;
 
       if (grayscale) {
@@ -47,7 +62,7 @@ export const RoomArt: FC<{
 
       context.drawImage(image, 0, 0, width, height);
     };
-  }, [canvasRef.current, width, height, imgSrc, grayscale]);
+  }, [canvasRef.current, width, height, imgSrc, grayscale, disabled]);
 
   return (
     <canvas

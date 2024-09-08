@@ -4,10 +4,10 @@ import clsx from 'clsx';
 import { TILE_TYPE } from './constants';
 import { RoomArt } from './RoomArt';
 
-// import room_demo_floor from './assets/room_demo_floor.png';
-// import room_demo_obstacle from './assets/room_demo_obstacle.png';
-// import room_demo_wall from './assets/room_demo_wall.png';
-// import room_demo_door from './assets/room_demo_door.png';
+import room_demo_floor from './assets/room_demo_floor.png';
+import room_demo_obstacle from './assets/room_demo_obstacle.png';
+import room_demo_wall from './assets/room_demo_wall.png';
+import room_demo_door from './assets/room_demo_door.png';
 
 export const Room: FC = () => {
   const {
@@ -21,6 +21,10 @@ export const Room: FC = () => {
     roomMatrix,
     selectedTiles,
     isLeftMouseDown,
+    fileArtRoomFloorDisabled,
+    fileArtRoomObstacleDisabled,
+    fileArtRoomWallDisabled,
+    fileArtRoomDoorDisabled,
     setSelectedTiles,
     setRoomMatrix,
     setIsLeftMouseDown,
@@ -197,7 +201,8 @@ export const Room: FC = () => {
             height={roomLength * tileSize}
             imgSrc={fileArtRoomFloor}
             grayscale={false}
-            // defaultImgSrc={room_demo_floor}
+            disabled={fileArtRoomFloorDisabled}
+            defaultImgSrc={room_demo_floor}
           />
         </div>
         <div className="absolute top-0 left-0 z-[1]">
@@ -206,7 +211,8 @@ export const Room: FC = () => {
             height={roomLength * tileSize}
             imgSrc={fileArtRoomObstacle}
             grayscale={false}
-            // defaultImgSrc={room_demo_floor}
+            disabled={fileArtRoomObstacleDisabled}
+            defaultImgSrc={room_demo_obstacle}
           />
         </div>
         <div className="absolute top-0 left-0 z-[2]">
@@ -215,7 +221,8 @@ export const Room: FC = () => {
             height={roomLength * tileSize}
             imgSrc={fileArtRoomWall}
             grayscale={false}
-            // defaultImgSrc={room_demo_floor}
+            disabled={fileArtRoomWallDisabled}
+            defaultImgSrc={room_demo_wall}
           />
         </div>
         <div className="absolute top-0 left-0 z-[3]">
@@ -224,7 +231,8 @@ export const Room: FC = () => {
             height={roomLength * tileSize}
             imgSrc={fileArtRoomDoor}
             grayscale={false}
-            // defaultImgSrc={room_demo_floor}
+            disabled={fileArtRoomDoorDisabled}
+            defaultImgSrc={room_demo_door}
           />
         </div>
       </div>

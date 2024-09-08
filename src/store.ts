@@ -29,14 +29,26 @@ interface AppStore {
   fileArtRoomFloor: string;
   setFileArtRoomFloor: (fileArtRoomFloor: string) => void;
 
+  fileArtRoomFloorDisabled: boolean;
+  setArtRoomFloorDisabled: (fileArtRoomFloorDisabled: boolean) => void;
+
   fileArtRoomObstacle: string;
   setFileArtRoomObstacle: (fileArtRoomObstacle: string) => void;
+
+  fileArtRoomObstacleDisabled: boolean;
+  setArtRoomObstacleDisabled: (fileArtRoomObstacleDisabled: boolean) => void;
 
   fileArtRoomWall: string;
   setFileArtRoomWall: (fileArtRoomWall: string) => void;
 
+  fileArtRoomWallDisabled: boolean;
+  setArtRoomWallDisabled: (fileArtRoomWallDisabled: boolean) => void;
+
   fileArtRoomDoor: string;
   setFileArtRoomDoor: (fileArtRoomDoor: string) => void;
+
+  fileArtRoomDoorDisabled: boolean;
+  setArtRoomDoorDisabled: (fileArtRoomDoorDisabled: boolean) => void;
 }
 
 const DEFAULT_ROOM_MATRIX = Array.from({ length: DEFAULT_ROOM_LENGTH }, () =>
@@ -89,9 +101,19 @@ export const useAppStore = create<AppStore>((set) => ({
     set({ fileArtRoomFloor });
   },
 
+  fileArtRoomFloorDisabled: false,
+  setArtRoomFloorDisabled: (fileArtRoomFloorDisabled: boolean) => {
+    set({ fileArtRoomFloorDisabled });
+  },
+
   fileArtRoomObstacle: '',
   setFileArtRoomObstacle: (fileArtRoomObstacle: string) => {
     set({ fileArtRoomObstacle });
+  },
+
+  fileArtRoomObstacleDisabled: false,
+  setArtRoomObstacleDisabled: (fileArtRoomObstacleDisabled: boolean) => {
+    set({ fileArtRoomObstacleDisabled });
   },
 
   fileArtRoomWall: '',
@@ -99,8 +121,18 @@ export const useAppStore = create<AppStore>((set) => ({
     set({ fileArtRoomWall });
   },
 
+  fileArtRoomWallDisabled: false,
+  setArtRoomWallDisabled: (fileArtRoomWallDisabled: boolean) => {
+    set({ fileArtRoomWallDisabled });
+  },
+
   fileArtRoomDoor: '',
   setFileArtRoomDoor: (fileArtRoomDoor: string) => {
     set({ fileArtRoomDoor });
+  },
+
+  fileArtRoomDoorDisabled: false,
+  setArtRoomDoorDisabled: (fileArtRoomDoorDisabled: boolean) => {
+    set({ fileArtRoomDoorDisabled });
   },
 }));
