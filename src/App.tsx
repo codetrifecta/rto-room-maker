@@ -1,14 +1,12 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useAppStore } from './store';
 import { Room } from './Room';
-import { DEFAULT_ROOM_LENGTH, DEFAULT_TILE_SIZE, TILE_TYPE } from './constants';
-
-const enum FILE_TYPE {
-  FLOOR = 'floor',
-  OBSTACLE = 'obstacle',
-  WALL = 'wall',
-  DOOR = 'door',
-}
+import {
+  DEFAULT_ROOM_LENGTH,
+  DEFAULT_TILE_SIZE,
+  FILE_TYPE,
+  TILE_TYPE,
+} from './constants';
 
 function App() {
   const [roomLengthStr, setRoomLengthStr] = useState<string>(
@@ -235,7 +233,7 @@ function App() {
           <button
             className="hover:border-white"
             onClick={() => {
-              const fileInput = document.getElementById('file-input');
+              const fileInput = document.getElementById('file-input-floor');
 
               if (fileInput === null) {
                 console.error('File input is null');
@@ -248,7 +246,7 @@ function App() {
             Input floor layer image
           </button>
           <input
-            id="file-input"
+            id="file-input-floor"
             className="hidden"
             type="file"
             onChange={(e) => handleFileChange(e, FILE_TYPE.FLOOR)}
@@ -259,7 +257,7 @@ function App() {
           <button
             className="hover:border-white"
             onClick={() => {
-              const fileInput = document.getElementById('file-input');
+              const fileInput = document.getElementById('file-input-obstacle');
 
               if (fileInput === null) {
                 console.error('File input is null');
@@ -272,7 +270,7 @@ function App() {
             Input obstacle layer image
           </button>
           <input
-            id="file-input"
+            id="file-input-obstacle"
             className="hidden"
             type="file"
             onChange={(e) => handleFileChange(e, FILE_TYPE.OBSTACLE)}
@@ -283,7 +281,7 @@ function App() {
           <button
             className="hover:border-white"
             onClick={() => {
-              const fileInput = document.getElementById('file-input');
+              const fileInput = document.getElementById('file-input-wall');
 
               if (fileInput === null) {
                 console.error('File input is null');
@@ -296,7 +294,7 @@ function App() {
             Input wall layer image
           </button>
           <input
-            id="file-input"
+            id="file-input-wall"
             className="hidden"
             type="file"
             onChange={(e) => handleFileChange(e, FILE_TYPE.WALL)}
@@ -307,7 +305,7 @@ function App() {
           <button
             className="hover:border-white"
             onClick={() => {
-              const fileInput = document.getElementById('file-input');
+              const fileInput = document.getElementById('file-input-door');
 
               if (fileInput === null) {
                 console.error('File input is null');
@@ -320,7 +318,7 @@ function App() {
             Input door layer image
           </button>
           <input
-            id="file-input"
+            id="file-input-door"
             className="hidden"
             type="file"
             onChange={(e) => handleFileChange(e, FILE_TYPE.DOOR)}

@@ -4,9 +4,17 @@ import clsx from 'clsx';
 import { TILE_TYPE } from './constants';
 import { RoomArt } from './RoomArt';
 
+// import room_demo_floor from './assets/room_demo_floor.png';
+// import room_demo_obstacle from './assets/room_demo_obstacle.png';
+// import room_demo_wall from './assets/room_demo_wall.png';
+// import room_demo_door from './assets/room_demo_door.png';
+
 export const Room: FC = () => {
   const {
-    file,
+    fileArtRoomFloor,
+    fileArtRoomObstacle,
+    fileArtRoomWall,
+    fileArtRoomDoor,
     roomLength,
     tileSize,
     displayGrid,
@@ -187,8 +195,36 @@ export const Room: FC = () => {
           <RoomArt
             width={roomLength * tileSize}
             height={roomLength * tileSize}
-            imgSrc={file}
+            imgSrc={fileArtRoomFloor}
             grayscale={false}
+            // defaultImgSrc={room_demo_floor}
+          />
+        </div>
+        <div className="absolute top-0 left-0 z-[1]">
+          <RoomArt
+            width={roomLength * tileSize}
+            height={roomLength * tileSize}
+            imgSrc={fileArtRoomObstacle}
+            grayscale={false}
+            // defaultImgSrc={room_demo_floor}
+          />
+        </div>
+        <div className="absolute top-0 left-0 z-[2]">
+          <RoomArt
+            width={roomLength * tileSize}
+            height={roomLength * tileSize}
+            imgSrc={fileArtRoomWall}
+            grayscale={false}
+            // defaultImgSrc={room_demo_floor}
+          />
+        </div>
+        <div className="absolute top-0 left-0 z-[3]">
+          <RoomArt
+            width={roomLength * tileSize}
+            height={roomLength * tileSize}
+            imgSrc={fileArtRoomDoor}
+            grayscale={false}
+            // defaultImgSrc={room_demo_floor}
           />
         </div>
       </div>

@@ -1,14 +1,13 @@
 import { FC, useEffect, useRef } from 'react';
 import { useAppStore } from './store';
 
-import defaultRoomArt from './assets/default-room.png';
-
 export const RoomArt: FC<{
   width: number;
   height: number;
   imgSrc: string;
+  defaultImgSrc?: string;
   grayscale?: boolean;
-}> = ({ width, height, imgSrc, grayscale }) => {
+}> = ({ width, height, imgSrc, defaultImgSrc, grayscale }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const { tileSize } = useAppStore();
@@ -27,7 +26,9 @@ export const RoomArt: FC<{
     const image = new Image();
 
     if (!imgSrc) {
-      imgSrc = defaultRoomArt;
+      if (defaultImgSrc) {
+        imgSrc = defaultImgSrc;
+      }
     }
 
     image.src = imgSrc;
