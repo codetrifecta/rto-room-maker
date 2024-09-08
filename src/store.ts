@@ -25,6 +25,18 @@ interface AppStore {
 
   file: string;
   setFile: (file: string) => void;
+
+  fileArtRoomFloor: string;
+  setFileArtRoomFloor: (fileArtRoomFloor: string) => void;
+
+  fileArtRoomObstacle: string;
+  setFileArtRoomObstacle: (fileArtRoomObstacle: string) => void;
+
+  fileArtRoomWall: string;
+  setFileArtRoomWall: (fileArtRoomWall: string) => void;
+
+  fileArtRoomDoor: string;
+  setFileArtRoomDoor: (fileArtRoomDoor: string) => void;
 }
 
 const DEFAULT_ROOM_MATRIX = Array.from({ length: DEFAULT_ROOM_LENGTH }, () =>
@@ -70,5 +82,25 @@ export const useAppStore = create<AppStore>((set) => ({
   file: '',
   setFile: (file: string) => {
     set({ file });
+  },
+
+  fileArtRoomFloor: '',
+  setFileArtRoomFloor: (fileArtRoomFloor: string) => {
+    set({ fileArtRoomFloor });
+  },
+
+  fileArtRoomObstacle: '',
+  setFileArtRoomObstacle: (fileArtRoomObstacle: string) => {
+    set({ fileArtRoomObstacle });
+  },
+
+  fileArtRoomWall: '',
+  setFileArtRoomWall: (fileArtRoomWall: string) => {
+    set({ fileArtRoomWall });
+  },
+
+  fileArtRoomDoor: '',
+  setFileArtRoomDoor: (fileArtRoomDoor: string) => {
+    set({ fileArtRoomDoor });
   },
 }));
