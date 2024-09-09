@@ -1,7 +1,12 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useAppStore } from './store';
 import { Room } from './Room';
-import { DEFAULT_ROOM_LENGTH, DEFAULT_TILE_SIZE, TILE_TYPE } from './constants';
+import {
+  DEFAULT_ROOM_LENGTH,
+  DEFAULT_TILE_SIZE,
+  FILE_TYPE,
+  TILE_TYPE,
+} from './constants';
 
 function App() {
   const [roomLengthStr, setRoomLengthStr] = useState<string>(
@@ -16,11 +21,22 @@ function App() {
     roomMatrix,
     roomLength,
     displayGrid,
+    fileArtRoomFloorDisabled,
+    fileArtRoomObstacleDisabled,
+    fileArtRoomWallDisabled,
+    fileArtRoomDoorDisabled,
     setDisplayGrid,
     setRoomLength,
     setTileSize,
     setRoomMatrix,
-    setFile,
+    setFileArtRoomFloor,
+    setArtRoomFloorDisabled,
+    setFileArtRoomObstacle,
+    setArtRoomObstacleDisabled,
+    setFileArtRoomWall,
+    setArtRoomWallDisabled,
+    setFileArtRoomDoor,
+    setArtRoomDoorDisabled,
   } = useAppStore();
 
   const appRef = useRef<HTMLDivElement>(null);
@@ -151,7 +167,10 @@ function App() {
     setRoomMatrix(roomMatrix);
   };
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    fileType: FILE_TYPE
+  ) => {
     console.log(e.target.files);
 
     if (e.target.files === null) {
@@ -159,7 +178,23 @@ function App() {
       return;
     }
 
-    setFile(URL.createObjectURL(e.target.files[0]));
+    switch (fileType) {
+      case FILE_TYPE.FLOOR:
+        setFileArtRoomFloor(URL.createObjectURL(e.target.files[0]));
+        break;
+      case FILE_TYPE.OBSTACLE:
+        setFileArtRoomObstacle(URL.createObjectURL(e.target.files[0]));
+        break;
+      case FILE_TYPE.WALL:
+        setFileArtRoomWall(URL.createObjectURL(e.target.files[0]));
+        break;
+      case FILE_TYPE.DOOR:
+        setFileArtRoomDoor(URL.createObjectURL(e.target.files[0]));
+        break;
+      default:
+        console.error('Invalid file type');
+        break;
+    }
   };
 
   return (
@@ -191,11 +226,22 @@ function App() {
           />
         </div>
 
+        <div className="flex items-center">
+          <label className="mr-3">Display Grid: </label>
+          <input
+            type="checkbox"
+            checked={displayGrid}
+            onChange={() => setDisplayGrid(!displayGrid)}
+          />
+        </div>
+      </div>
+
+      <div className="flex gap-5 mb-5">
         <div className="flex">
           <button
             className="hover:border-white"
             onClick={() => {
-              const fileInput = document.getElementById('file-input');
+              const fileInput = document.getElementById('file-input-floor');
 
               if (fileInput === null) {
                 console.error('File input is null');
@@ -205,22 +251,125 @@ function App() {
               fileInput.click();
             }}
           >
-            Input tile art
+            Input floor layer image
           </button>
           <input
-            id="file-input"
+            id="file-input-floor"
             className="hidden"
             type="file"
-            onChange={handleFileChange}
+            onChange={(e) => handleFileChange(e, FILE_TYPE.FLOOR)}
+          />
+        </div>
+
+        <div className="flex">
+          <button
+            className="hover:border-white"
+            onClick={() => {
+              const fileInput = document.getElementById('file-input-obstacle');
+
+              if (fileInput === null) {
+                console.error('File input is null');
+                return;
+              }
+
+              fileInput.click();
+            }}
+          >
+            Input obstacle layer image
+          </button>
+          <input
+            id="file-input-obstacle"
+            className="hidden"
+            type="file"
+            onChange={(e) => handleFileChange(e, FILE_TYPE.OBSTACLE)}
+          />
+        </div>
+
+        <div className="flex">
+          <button
+            className="hover:border-white"
+            onClick={() => {
+              const fileInput = document.getElementById('file-input-wall');
+
+              if (fileInput === null) {
+                console.error('File input is null');
+                return;
+              }
+
+              fileInput.click();
+            }}
+          >
+            Input wall layer image
+          </button>
+          <input
+            id="file-input-wall"
+            className="hidden"
+            type="file"
+            onChange={(e) => handleFileChange(e, FILE_TYPE.WALL)}
+          />
+        </div>
+
+        <div className="flex">
+          <button
+            className="hover:border-white"
+            onClick={() => {
+              const fileInput = document.getElementById('file-input-door');
+
+              if (fileInput === null) {
+                console.error('File input is null');
+                return;
+              }
+
+              fileInput.click();
+            }}
+          >
+            Input door layer image
+          </button>
+          <input
+            id="file-input-door"
+            className="hidden"
+            type="file"
+            onChange={(e) => handleFileChange(e, FILE_TYPE.DOOR)}
+          />
+        </div>
+      </div>
+
+      <div className="flex gap-5 mb-5">
+        <div className="flex items-center">
+          <label className="mr-3">Display Floor Art: </label>
+          <input
+            type="checkbox"
+            checked={!fileArtRoomFloorDisabled}
+            onChange={() => setArtRoomFloorDisabled(!fileArtRoomFloorDisabled)}
           />
         </div>
 
         <div className="flex items-center">
-          <label className="mr-3">Display Grid: </label>
+          <label className="mr-3">Display Obstacle Art: </label>
           <input
             type="checkbox"
-            checked={displayGrid}
-            onChange={() => setDisplayGrid(!displayGrid)}
+            checked={!fileArtRoomObstacleDisabled}
+            onChange={() =>
+              setArtRoomObstacleDisabled(!fileArtRoomObstacleDisabled)
+            }
+          />
+        </div>
+
+        <div className="flex items-center">
+          <label className="mr-3">Display Wall Art: </label>
+          <input
+            type="checkbox"
+            checked={!fileArtRoomWallDisabled}
+            onChange={() => setArtRoomWallDisabled(!fileArtRoomWallDisabled)}
+          />
+        </div>
+
+        <div className="flex items-center">
+          <label className="mr-3">Display Door Art: </label>
+          <input
+            type="checkbox"
+            checked={!fileArtRoomDoorDisabled}
+            onChange={() => setArtRoomDoorDisabled(!fileArtRoomDoorDisabled)}
           />
         </div>
       </div>

@@ -4,15 +4,27 @@ import clsx from 'clsx';
 import { TILE_TYPE } from './constants';
 import { RoomArt } from './RoomArt';
 
+import room_demo_floor from './assets/room_demo_floor.png';
+import room_demo_obstacle from './assets/room_demo_obstacle.png';
+import room_demo_wall from './assets/room_demo_wall.png';
+import room_demo_door from './assets/room_demo_door.png';
+
 export const Room: FC = () => {
   const {
-    file,
+    fileArtRoomFloor,
+    fileArtRoomObstacle,
+    fileArtRoomWall,
+    fileArtRoomDoor,
     roomLength,
     tileSize,
     displayGrid,
     roomMatrix,
     selectedTiles,
     isLeftMouseDown,
+    fileArtRoomFloorDisabled,
+    fileArtRoomObstacleDisabled,
+    fileArtRoomWallDisabled,
+    fileArtRoomDoorDisabled,
     setSelectedTiles,
     setRoomMatrix,
     setIsLeftMouseDown,
@@ -141,6 +153,12 @@ export const Room: FC = () => {
         </button>
         <button
           disabled={selectedTiles.length === 0}
+          onClick={() => onSetTileType(TILE_TYPE.OBSTACLE)}
+        >
+          Set to Obstacle
+        </button>
+        <button
+          disabled={selectedTiles.length === 0}
           onClick={() => onSetTileType(TILE_TYPE.WALL)}
         >
           Set to Wall
@@ -187,8 +205,40 @@ export const Room: FC = () => {
           <RoomArt
             width={roomLength * tileSize}
             height={roomLength * tileSize}
-            imgSrc={file}
+            imgSrc={fileArtRoomFloor}
             grayscale={false}
+            disabled={fileArtRoomFloorDisabled}
+            defaultImgSrc={room_demo_floor}
+          />
+        </div>
+        <div className="absolute top-0 left-0 z-[1]">
+          <RoomArt
+            width={roomLength * tileSize}
+            height={roomLength * tileSize}
+            imgSrc={fileArtRoomObstacle}
+            grayscale={false}
+            disabled={fileArtRoomObstacleDisabled}
+            defaultImgSrc={room_demo_obstacle}
+          />
+        </div>
+        <div className="absolute top-0 left-0 z-[2]">
+          <RoomArt
+            width={roomLength * tileSize}
+            height={roomLength * tileSize}
+            imgSrc={fileArtRoomWall}
+            grayscale={false}
+            disabled={fileArtRoomWallDisabled}
+            defaultImgSrc={room_demo_wall}
+          />
+        </div>
+        <div className="absolute top-0 left-0 z-[3]">
+          <RoomArt
+            width={roomLength * tileSize}
+            height={roomLength * tileSize}
+            imgSrc={fileArtRoomDoor}
+            grayscale={false}
+            disabled={fileArtRoomDoorDisabled}
+            defaultImgSrc={room_demo_door}
           />
         </div>
       </div>
@@ -225,8 +275,9 @@ const Tile: FC<{
           'border-2': displayOutline,
           'border-none': tileType === TILE_TYPE.NULL,
           'border-white': tileType === TILE_TYPE.FLOOR,
+          'border-yellow-300': tileType === TILE_TYPE.OBSTACLE,
           'border-red-600': tileType === TILE_TYPE.WALL,
-          'border-yellow-300': tileType === TILE_TYPE.DOOR,
+          'border-green-600': tileType === TILE_TYPE.DOOR,
         })}
       >
         <div
