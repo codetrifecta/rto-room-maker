@@ -153,6 +153,12 @@ export const Room: FC = () => {
         </button>
         <button
           disabled={selectedTiles.length === 0}
+          onClick={() => onSetTileType(TILE_TYPE.OBSTACLE)}
+        >
+          Set to Obstacle
+        </button>
+        <button
+          disabled={selectedTiles.length === 0}
           onClick={() => onSetTileType(TILE_TYPE.WALL)}
         >
           Set to Wall
@@ -269,8 +275,9 @@ const Tile: FC<{
           'border-2': displayOutline,
           'border-none': tileType === TILE_TYPE.NULL,
           'border-white': tileType === TILE_TYPE.FLOOR,
+          'border-yellow-300': tileType === TILE_TYPE.OBSTACLE,
           'border-red-600': tileType === TILE_TYPE.WALL,
-          'border-yellow-300': tileType === TILE_TYPE.DOOR,
+          'border-green-600': tileType === TILE_TYPE.DOOR,
         })}
       >
         <div
