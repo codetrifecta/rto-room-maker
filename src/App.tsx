@@ -86,6 +86,9 @@ function App() {
           case TILE_TYPE.NULL:
             roomMatrixString += TILE_TYPE.NULL;
             break;
+          case TILE_TYPE.OBSTACLE:
+            roomMatrixString += TILE_TYPE.OBSTACLE;
+            break;
           case TILE_TYPE.WALL:
             roomMatrixString += TILE_TYPE.WALL;
             break;
