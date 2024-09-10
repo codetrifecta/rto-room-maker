@@ -7,6 +7,7 @@ export enum TILE_TYPE {
   OBSTACLE = 2,
   WALL = 3,
   DOOR = 4,
+  CHEST = 5,
 }
 
 export const enum FILE_TYPE {
