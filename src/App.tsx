@@ -95,6 +95,9 @@ function App() {
           case TILE_TYPE.DOOR:
             roomMatrixString += TILE_TYPE.DOOR;
             break;
+          case TILE_TYPE.CHEST:
+            roomMatrixString += TILE_TYPE.CHEST;
+            break;
           default:
             roomMatrixString += TILE_TYPE.FLOOR;
             break;

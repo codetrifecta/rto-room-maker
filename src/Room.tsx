@@ -169,6 +169,12 @@ export const Room: FC = () => {
         >
           Set to Door
         </button>
+        <button
+          disabled={selectedTiles.length === 0}
+          onClick={() => onSetTileType(TILE_TYPE.CHEST)}
+        >
+          Set to Chest
+        </button>
       </div>
 
       <div
@@ -278,6 +284,7 @@ const Tile: FC<{
           'border-yellow-300': tileType === TILE_TYPE.OBSTACLE,
           'border-red-600': tileType === TILE_TYPE.WALL,
           'border-green-600': tileType === TILE_TYPE.DOOR,
+          'border-pink-300': tileType === TILE_TYPE.CHEST,
         })}
       >
         <div
