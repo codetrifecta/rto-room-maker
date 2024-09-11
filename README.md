@@ -1,6 +1,6 @@
 # RtO Room Maker
 
-Internal tool to manage tile functionality with tile art to create rooms to be used in Return to Olympus Web Game.
+Internal tool to manage tile functionality with tile art to create rooms to be used in Rise to Olympus Web Game.
 
 Link: [https://rto-room-maker.netlify.app/](https://rto-room-maker.netlify.app/)
 
