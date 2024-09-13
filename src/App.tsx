@@ -70,7 +70,9 @@ function App() {
   // When room length input changes,
   // generate default room matrix
   useEffect(() => {
-    generateDefaultRoomMatrix(roomLength);
+    if (roomLength !== roomMatrix.length) {
+      generateDefaultRoomMatrix(roomLength);
+    }
   }, [roomLength]);
 
   // When room matrix changes,
@@ -117,6 +119,8 @@ function App() {
 
     setRoomMatrixStr(roomMatrixString);
   }, [roomMatrix]);
+
+  // console.log('roomMatrix App', roomMatrix);
 
   const handleRoomLengthChange = (val: string) => {
     if (val === '') {

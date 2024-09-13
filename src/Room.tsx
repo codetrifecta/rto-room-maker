@@ -4,10 +4,10 @@ import clsx from 'clsx';
 import { TILE_TYPE } from './constants';
 import { RoomArt } from './RoomArt';
 
-import room_demo_floor from './assets/room_demo_floor.png';
-import room_demo_obstacle from './assets/room_demo_obstacle.png';
-import room_demo_wall from './assets/room_demo_wall.png';
-import room_demo_door from './assets/room_demo_door.png';
+import room_tutorial_floor from './assets/room_tutorial_floor.png';
+import room_tutorial_obstacle from './assets/room_tutorial_obstacle.png';
+import room_tutorial_wall from './assets/room_tutorial_wall.png';
+import room_tutorial_door from './assets/room_tutorial_door.png';
 
 export const Room: FC = () => {
   const {
@@ -128,6 +128,8 @@ export const Room: FC = () => {
     setRoomMatrix(newRoomMatrix);
   };
 
+  // console.log('roomMatrix', roomMatrix);
+
   return (
     <div className="flex flex-col items-center">
       <h2 className="mb-3">Tile - Art Visualizer</h2>
@@ -214,7 +216,7 @@ export const Room: FC = () => {
             imgSrc={fileArtRoomFloor}
             grayscale={false}
             disabled={fileArtRoomFloorDisabled}
-            defaultImgSrc={room_demo_floor}
+            defaultImgSrc={room_tutorial_floor}
           />
         </div>
         <div className="absolute top-0 left-0 z-[1]">
@@ -224,7 +226,7 @@ export const Room: FC = () => {
             imgSrc={fileArtRoomObstacle}
             grayscale={false}
             disabled={fileArtRoomObstacleDisabled}
-            defaultImgSrc={room_demo_obstacle}
+            defaultImgSrc={room_tutorial_obstacle}
           />
         </div>
         <div className="absolute top-0 left-0 z-[2]">
@@ -234,7 +236,7 @@ export const Room: FC = () => {
             imgSrc={fileArtRoomWall}
             grayscale={false}
             disabled={fileArtRoomWallDisabled}
-            defaultImgSrc={room_demo_wall}
+            defaultImgSrc={room_tutorial_wall}
           />
         </div>
         <div className="absolute top-0 left-0 z-[3]">
@@ -244,7 +246,7 @@ export const Room: FC = () => {
             imgSrc={fileArtRoomDoor}
             grayscale={false}
             disabled={fileArtRoomDoorDisabled}
-            defaultImgSrc={room_demo_door}
+            defaultImgSrc={room_tutorial_door}
           />
         </div>
       </div>
