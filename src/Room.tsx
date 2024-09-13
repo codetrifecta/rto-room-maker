@@ -223,23 +223,13 @@ export const Room: FC = () => {
           <RoomArt
             width={roomLength * tileSize}
             height={roomLength * tileSize}
-            imgSrc={fileArtRoomObstacle}
-            grayscale={false}
-            disabled={fileArtRoomObstacleDisabled}
-            defaultImgSrc={room_tutorial_obstacle}
-          />
-        </div>
-        <div className="absolute top-0 left-0 z-[2]">
-          <RoomArt
-            width={roomLength * tileSize}
-            height={roomLength * tileSize}
             imgSrc={fileArtRoomWall}
             grayscale={false}
             disabled={fileArtRoomWallDisabled}
             defaultImgSrc={room_tutorial_wall}
           />
         </div>
-        <div className="absolute top-0 left-0 z-[3]">
+        <div className="absolute top-0 left-0 z-[2]">
           <RoomArt
             width={roomLength * tileSize}
             height={roomLength * tileSize}
@@ -247,6 +237,16 @@ export const Room: FC = () => {
             grayscale={false}
             disabled={fileArtRoomDoorDisabled}
             defaultImgSrc={room_tutorial_door}
+          />
+        </div>
+        <div className="absolute top-0 left-0 z-[3]">
+          <RoomArt
+            width={roomLength * tileSize}
+            height={roomLength * tileSize}
+            imgSrc={fileArtRoomObstacle}
+            grayscale={false}
+            disabled={fileArtRoomObstacleDisabled}
+            defaultImgSrc={room_tutorial_obstacle}
           />
         </div>
       </div>
