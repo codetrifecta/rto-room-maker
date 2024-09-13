@@ -1,5 +1,9 @@
 import { create } from 'zustand';
-import { DEFAULT_ROOM_LENGTH, DEFAULT_TILE_SIZE } from './constants';
+import {
+  DEFAULT_ROOM_LENGTH,
+  DEFAULT_ROOM_MATRIX,
+  DEFAULT_TILE_SIZE,
+} from './constants';
 
 interface AppStore {
   roomLength: number;
@@ -50,10 +54,6 @@ interface AppStore {
   fileArtRoomDoorDisabled: boolean;
   setArtRoomDoorDisabled: (fileArtRoomDoorDisabled: boolean) => void;
 }
-
-const DEFAULT_ROOM_MATRIX = Array.from({ length: DEFAULT_ROOM_LENGTH }, () =>
-  Array.from({ length: DEFAULT_ROOM_LENGTH }, () => 0)
-);
 
 export const useAppStore = create<AppStore>((set) => ({
   roomLength: DEFAULT_ROOM_LENGTH,
