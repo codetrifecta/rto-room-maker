@@ -195,6 +195,8 @@ export const Room: FC = () => {
             row.map((tileType, colIndex) => (
               <Tile
                 key={`${rowIndex}-${colIndex}`}
+                row={rowIndex}
+                col={colIndex}
                 tileType={tileType}
                 size={tileSize}
                 selected={selectedTiles.some(
@@ -256,6 +258,8 @@ export const Room: FC = () => {
 
 const Tile: FC<{
   size: number;
+  row: number;
+  col: number;
   selected: boolean;
   onSelect: () => void;
   onUnselect?: () => void;
@@ -264,6 +268,8 @@ const Tile: FC<{
   tileType: TILE_TYPE;
 }> = ({
   size,
+  row,
+  col,
   selected,
   onSelect,
   onUnselect,
@@ -279,7 +285,7 @@ const Tile: FC<{
       onClick={selected ? onUnselect : onSelect}
     >
       <div
-        className={clsx('relative w-full h-full', {
+        className={clsx('group relative w-full h-full', {
           'border-2': displayOutline,
           'border-none': tileType === TILE_TYPE.NULL,
           'border-white': tileType === TILE_TYPE.FLOOR,
@@ -294,6 +300,12 @@ const Tile: FC<{
             'bg-white bg-opacity-50': selected,
           })}
         ></div>
+        <div
+          className="absolute top-[50%] left-[50%] invisible group-hover:visible"
+          style={{ transform: 'translate(-50%, -50%)' }}
+        >
+          {row + ',' + col}
+        </div>
       </div>
     </div>
   );
