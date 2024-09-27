@@ -211,7 +211,7 @@ function App() {
     <div className="flex flex-col items-center pb-20" ref={appRef}>
       <div className="my-10">
         <h1 className="mb-2 uppercase">
-          R<span className="text-4xl">eturn</span>{' '}
+          R<span className="text-4xl">ise</span>{' '}
           <span className="text-4xl">to</span> O
           <span className="text-4xl">lympus</span>
         </h1>
